@@ -411,8 +411,8 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 80px 20px 30px;
+  justify-content: flex-start;
+  padding: 76px 20px 48px;
 }
 
 /* Atmospheric Sky & Animated Clouds */
@@ -748,8 +748,8 @@ img {
   position: relative;
   width: 100%;
   max-width: 1400px;
-  height: 350px;
-  margin: 12px auto 0;
+  height: 380px;
+  margin: 0 auto;
   overflow: visible;
   perspective: 3000px;
   -webkit-mask: linear-gradient(90deg, transparent 0%, #000 8% 92%, transparent 100%);
@@ -765,7 +765,7 @@ img {
 
 .hero-carousel-cylinder {
   position: absolute;
-  top: 44%;
+  top: 35%;
   left: 50%;
   width: 1px;
   height: 1px;
@@ -2585,8 +2585,8 @@ img {
   .hero-section { padding: 75px 16px 20px; }
   .hero-title { font-size: 2.2rem; }
   .floating-badge-wrap { display: none; }
-  .hero-carousel-wrap { height: 300px; margin: 10px auto 0; }
-  .hero-carousel-cylinder { top: 46%; }
+  .hero-carousel-wrap { height: 320px; margin: 0 auto; }
+  .hero-carousel-cylinder { top: 38%; }
   .carousel-card-item { width: 144px; height: 192px; margin-left: -72px; margin-top: -96px; border-radius: 16px; }
 
   .carousel-3d-stage { height: 350px; }
