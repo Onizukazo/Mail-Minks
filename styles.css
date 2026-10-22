@@ -1048,16 +1048,16 @@ img {
 }
 
 .testimonials-container {
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
 .testimonials-layout {
   display: grid;
-  grid-template-columns: 1fr 1.35fr;
+  grid-template-columns: 1.05fr 1.25fr;
   align-items: center;
-  gap: 64px;
+  gap: 52px;
 }
 
 .testimonials-info-col {
@@ -1069,12 +1069,22 @@ img {
 
 .testimonials-title {
   font-family: 'PP Neue Montreal', var(--font-heading, sans-serif);
-  font-size: clamp(2.1rem, 3.5vw, 3.1rem);
+  font-size: clamp(1.85rem, 2.45vw, 2.4rem);
   font-weight: 700;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
   color: #100C29;
   line-height: 1.14;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
+}
+
+.testimonials-title .title-line {
+  display: block;
+}
+
+@media (min-width: 601px) {
+  .testimonials-title .title-line {
+    white-space: nowrap;
+  }
 }
 
 .testimonials-subtitle {
