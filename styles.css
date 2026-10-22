@@ -409,7 +409,7 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 86px 20px 36px;
+  padding: 86px 20px 65px;
 }
 
 /* Atmospheric Sky & Animated Clouds */
@@ -744,7 +744,7 @@ img {
   width: 100%;
   max-width: 1400px;
   height: 380px;
-  margin: -50px auto 0;
+  margin: -70px auto 0;
   overflow: visible;
   perspective: 3000px;
   -webkit-mask: linear-gradient(90deg, transparent 0%, #000 8% 92%, transparent 100%);
@@ -760,7 +760,7 @@ img {
 
 .hero-carousel-cylinder {
   position: absolute;
-  top: 37%;
+  top: 34%;
   left: 50%;
   width: 1px;
   height: 1px;
