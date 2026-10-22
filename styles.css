@@ -773,11 +773,11 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 154px;
-  height: 274px;
-  margin-left: -77px;
-  margin-top: -137px;
-  border-radius: 20px;
+  width: 225px;
+  height: 295px;
+  margin-left: -112.5px;
+  margin-top: -147.5px;
+  border-radius: 22px;
   overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -2582,7 +2582,7 @@ img {
   .floating-badge-wrap { display: none; }
   .hero-carousel-wrap { height: 320px; margin: -45px auto 0; }
   .hero-carousel-cylinder { top: 40%; }
-  .carousel-card-item { width: 110px; height: 196px; margin-left: -55px; margin-top: -98px; border-radius: 16px; }
+  .carousel-card-item { width: 144px; height: 192px; margin-left: -72px; margin-top: -96px; border-radius: 16px; }
 
   .carousel-3d-stage { height: 350px; }
   .carousel-3d-card { width: 200px; height: 300px; }
