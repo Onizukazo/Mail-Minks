@@ -288,74 +288,66 @@
 
     <!-- SECTION 3: TESTIMONIALS (Horizontal Scroll Showcase) -->
     <section id="testimonials" class="section-testimonials">
-      <div class="container">
-        <div class="section-header text-center">
-          <h2 class="section-heading">Transforming Brands From Retention Heavy to Retention Profitable</h2>
-          <p class="section-subheading">Hear from the founders who trust us to turn retention into revenue.</p>
-        </div>
-      </div>
+      <div class="container testimonials-container">
+        <div class="testimonials-layout">
+          <!-- Left Column: Heading, Subheading & Nav Controls -->
+          <div class="testimonials-info-col">
+            <div class="testimonials-text-group">
+              <h2 class="testimonials-title">
+                Transforming Brands<br>
+                From Retention Heavy to<br>
+                Retention Profitable
+              </h2>
+              <p class="testimonials-subtitle">
+                Hear from the founders who trust us<br class="sub-br">
+                to turn retention into revenue.
+              </p>
+            </div>
 
-      <!-- Horizontal Scroll Track Viewport -->
-      <div class="testimonials-scroll-viewport" id="testimonialsScrollViewport">
-        <div class="testimonials-scroll-track" id="testimonialsScrollTrack">
-          <!-- Card 1: Seep (Laura Harnett) -->
-          <div class="testimonial-scroll-item" data-index="0">
-            <img src="testimonial cards/1.svg" alt="Mail Minks Client Review - Laura Harnett, Founder of Seep" class="testimonial-card-img" draggable="false" loading="lazy">
+            <!-- Arrow Navigation Buttons -->
+            <div class="testimonials-nav-group" aria-label="Testimonial Navigation">
+              <button class="testimonial-arrow-btn prev-btn" id="testimonialPrevBtn" aria-label="Previous testimonial" title="Previous testimonial">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+              </button>
+              <button class="testimonial-arrow-btn next-btn" id="testimonialNextBtn" aria-label="Next testimonial" title="Next testimonial">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
           </div>
 
-          <!-- Card 2: MedShrum -->
-          <div class="testimonial-scroll-item" data-index="1">
-            <img src="testimonial cards/2.svg" alt="Mail Minks Client Review - MedShrum" class="testimonial-card-img" draggable="false" loading="lazy">
-          </div>
-
-          <!-- Card 3: Footed Pajamas (Steve Kakoullis) -->
-          <div class="testimonial-scroll-item" data-index="2">
-            <img src="testimonial cards/3.svg" alt="Mail Minks Client Review - Steve Kakoullis, Founder of Footed Pajamas" class="testimonial-card-img" draggable="false" loading="lazy">
-          </div>
-
-          <!-- Card 4: America & Beyond (Mohit Juneja) -->
-          <div class="testimonial-scroll-item" data-index="3">
-            <img src="testimonial cards/4.svg" alt="Mail Minks Client Review - Mohit Juneja, Founder of America & Beyond" class="testimonial-card-img" draggable="false" loading="lazy">
-          </div>
-
-          <!-- Card 5: Knopf (Peter Knopf) -->
-          <div class="testimonial-scroll-item" data-index="4">
-            <img src="testimonial cards/5.svg" alt="Mail Minks Client Review - Peter Knopf, Founder of Knopf" class="testimonial-card-img" draggable="false" loading="lazy">
-          </div>
-
-          <!-- Card 6: Diaza (Diego Huratado) -->
-          <div class="testimonial-scroll-item" data-index="5">
-            <img src="testimonial cards/6.svg" alt="Mail Minks Client Review - Diego Huratado, Founder of Diaza" class="testimonial-card-img" draggable="false" loading="lazy">
-          </div>
-        </div>
-      </div>
-
-      <!-- Controls Row: Arrows (Left) and Segmented Progress Indicators (Right) -->
-      <div class="container">
-        <div class="testimonials-controls-row">
-          <div class="testimonials-nav-arrows">
-            <button class="testimonials-arrow-btn prev-btn" id="testimonialPrevBtn" aria-label="Previous testimonial">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </button>
-            <button class="testimonials-arrow-btn next-btn" id="testimonialNextBtn" aria-label="Next testimonial">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </button>
-          </div>
-
-          <div class="testimonials-progress-container">
-            <div class="testimonials-segments" id="testimonialsSegments">
-              <button class="segment-bar active" data-index="0" aria-label="Go to slide 1"></button>
-              <button class="segment-bar" data-index="1" aria-label="Go to slide 2"></button>
-              <button class="segment-bar" data-index="2" aria-label="Go to slide 3"></button>
-              <button class="segment-bar" data-index="3" aria-label="Go to slide 4"></button>
-              <button class="segment-bar" data-index="4" aria-label="Go to slide 5"></button>
-              <button class="segment-bar" data-index="5" aria-label="Go to slide 6"></button>
+          <!-- Right Column: Animated Card Slider -->
+          <div class="testimonials-slider-col">
+            <div class="testimonials-card-stage" id="testimonialCardStage" role="region" aria-label="Client Testimonials Carousel" aria-live="polite">
+              <!-- Slide 0: Seep (Laura Harnett) -->
+              <div class="testimonial-card-slide active" data-index="0">
+                <img src="testimonial cards/1.png" alt="Laura Harnett, Founder of Seep: Working with Mail Minks has been a total game-changer!" class="testimonial-card-img" draggable="false">
+              </div>
+              <!-- Slide 1: Diaza (John Doe) -->
+              <div class="testimonial-card-slide" data-index="1">
+                <img src="testimonial cards/2.png" alt="John Doe, Founder of Diaza: Mail Minks has helped us stay consistent with our email campaigns." class="testimonial-card-img" draggable="false" loading="lazy">
+              </div>
+              <!-- Slide 2: Medshrum (Michelle Simpson) -->
+              <div class="testimonial-card-slide" data-index="2">
+                <img src="testimonial cards/3.png" alt="Michelle Simpson, Founder of Medshrum: Mail Minks is fast, reliable & incredibly easy to collaborate with." class="testimonial-card-img" draggable="false" loading="lazy">
+              </div>
+              <!-- Slide 3: Votch (Laura Way) -->
+              <div class="testimonial-card-slide" data-index="3">
+                <img src="testimonial cards/4.png" alt="Laura Way, Founder of Votch: Mail Minks strategic approach to design truly magnified our brand." class="testimonial-card-img" draggable="false" loading="lazy">
+              </div>
+              <!-- Slide 4: Footed Pajamas (Steve Kakoullis) -->
+              <div class="testimonial-card-slide" data-index="4">
+                <img src="testimonial cards/5.png" alt="Steve Kakoullis, Founder of Footed Pajamas: Mail Minks has been a game-changer for our seasonal performance." class="testimonial-card-img" draggable="false" loading="lazy">
+              </div>
+              <!-- Slide 5: America & Beyond (Mohit Juneja) -->
+              <div class="testimonial-card-slide" data-index="5">
+                <img src="testimonial cards/6.png" alt="Mohit Juneja, Founder of America & Beyond: Mail Minks has taken our email marketing to the next level." class="testimonial-card-img" draggable="false" loading="lazy">
+              </div>
             </div>
           </div>
         </div>

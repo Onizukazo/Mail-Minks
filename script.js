@@ -242,105 +242,160 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ============================================================
-  // TESTIMONIALS HORIZONTAL SCROLL CAROUSEL ENGINE
+  // TESTIMONIALS SPLIT SHOWCASE SLIDER ENGINE
+  // Slow autoplay + manual navigation via left/right arrows + swipe
   // ============================================================
-  const testimonialsViewport = document.getElementById('testimonialsScrollViewport');
-  const testimonialsTrack = document.getElementById('testimonialsScrollTrack');
+  const stage = document.getElementById('testimonialCardStage');
+  const slides = Array.from(document.querySelectorAll('.testimonial-card-slide'));
   const prevBtn = document.getElementById('testimonialPrevBtn');
   const nextBtn = document.getElementById('testimonialNextBtn');
-  const segmentBars = document.querySelectorAll('.segment-bar');
-  const scrollItems = document.querySelectorAll('.testimonial-scroll-item');
 
-  if (testimonialsViewport && scrollItems.length > 0) {
-    const getStepWidth = () => {
-      const firstItem = scrollItems[0];
-      const gap = 28;
-      return firstItem ? firstItem.offsetWidth + gap : 500;
-    };
+  if (stage && slides.length > 0) {
+    let currentIndex = 0;
+    let isAnimating = false;
+    let autoPlayTimer = null;
+    const AUTOPLAY_INTERVAL = 5500; // 5.5 seconds - comfortable, relaxed reading pace
 
-    const updateActiveIndicator = () => {
-      const scrollLeft = testimonialsViewport.scrollLeft;
-      const step = getStepWidth();
-      let activeIndex = Math.round(scrollLeft / step);
-      if (activeIndex < 0) activeIndex = 0;
-      if (activeIndex >= scrollItems.length) activeIndex = scrollItems.length - 1;
+    function goToSlide(targetIndex, direction = 'next') {
+      if (isAnimating) return;
+      if (targetIndex === currentIndex) return;
 
-      segmentBars.forEach((bar, idx) => {
-        bar.classList.toggle('active', idx === activeIndex);
+      isAnimating = true;
+
+      // Wrap around
+      let newIndex = (targetIndex + slides.length) % slides.length;
+      const currentSlide = slides[currentIndex];
+      const nextSlide = slides[newIndex];
+
+      // Reset exiting/entering classes
+      slides.forEach(s => {
+        s.classList.remove('exit-left', 'exit-right', 'enter-left', 'enter-right');
       });
 
-      const maxScroll = testimonialsViewport.scrollWidth - testimonialsViewport.clientWidth;
-      if (prevBtn) {
-        prevBtn.disabled = scrollLeft <= 8;
-        prevBtn.classList.toggle('disabled', scrollLeft <= 8);
+      if (direction === 'next') {
+        currentSlide.classList.add('exit-left');
+        nextSlide.classList.add('enter-right');
+      } else {
+        currentSlide.classList.add('exit-right');
+        nextSlide.classList.add('enter-left');
       }
-      if (nextBtn) {
-        nextBtn.disabled = scrollLeft >= maxScroll - 8;
-        nextBtn.classList.toggle('disabled', scrollLeft >= maxScroll - 8);
+
+      // Force layout reflow so the enter class is applied before animating to active
+      void nextSlide.offsetWidth;
+
+      // Animate current out and next in
+      currentSlide.classList.remove('active');
+      nextSlide.classList.add('active');
+      nextSlide.classList.remove('enter-left', 'enter-right');
+
+      currentIndex = newIndex;
+
+      setTimeout(() => {
+        slides.forEach((s, idx) => {
+          if (idx !== currentIndex) {
+            s.classList.remove('active', 'exit-left', 'exit-right', 'enter-left', 'enter-right');
+          }
+        });
+        isAnimating = false;
+      }, 700);
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayTimer = setInterval(() => {
+        goToSlide(currentIndex + 1, 'next');
+      }, AUTOPLAY_INTERVAL);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
       }
-    };
+    }
 
-    testimonialsViewport.addEventListener('scroll', () => {
-      requestAnimationFrame(updateActiveIndicator);
-    }, { passive: true });
+    function resetAutoPlay() {
+      stopAutoPlay();
+      startAutoPlay();
+    }
 
-    updateActiveIndicator();
-    window.addEventListener('resize', updateActiveIndicator);
-
+    // Navigation button events
     if (prevBtn) {
       prevBtn.addEventListener('click', () => {
-        const step = getStepWidth();
-        testimonialsViewport.scrollBy({ left: -step, behavior: 'smooth' });
+        goToSlide(currentIndex - 1, 'prev');
+        resetAutoPlay();
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', () => {
-        const step = getStepWidth();
-        testimonialsViewport.scrollBy({ left: step, behavior: 'smooth' });
+        goToSlide(currentIndex + 1, 'next');
+        resetAutoPlay();
       });
     }
 
-    segmentBars.forEach((bar, idx) => {
-      bar.addEventListener('click', () => {
-        const item = scrollItems[idx];
-        if (item && testimonialsTrack) {
-          const trackPadding = parseInt(window.getComputedStyle(testimonialsTrack).paddingLeft) || 0;
-          const targetLeft = item.offsetLeft - trackPadding;
-          testimonialsViewport.scrollTo({ left: targetLeft, behavior: 'smooth' });
+    // Hover pause on stage and controls
+    stage.addEventListener('mouseenter', stopAutoPlay);
+    stage.addEventListener('mouseleave', startAutoPlay);
+    if (prevBtn) {
+      prevBtn.addEventListener('mouseenter', stopAutoPlay);
+      prevBtn.addEventListener('mouseleave', startAutoPlay);
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('mouseenter', stopAutoPlay);
+      nextBtn.addEventListener('mouseleave', startAutoPlay);
+    }
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      stopAutoPlay();
+    }, { passive: true });
+
+    stage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > 40) {
+        if (diff < 0) {
+          goToSlide(currentIndex + 1, 'next');
+        } else {
+          goToSlide(currentIndex - 1, 'prev');
         }
-      });
-    });
-
-    // Mouse drag to scroll
-    let isMouseDown = false;
-    let startX = 0;
-    let scrollStart = 0;
-
-    testimonialsViewport.addEventListener('mousedown', (e) => {
-      isMouseDown = true;
-      testimonialsViewport.classList.add('is-dragging');
-      startX = e.pageX - testimonialsViewport.offsetLeft;
-      scrollStart = testimonialsViewport.scrollLeft;
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isMouseDown) return;
-      e.preventDefault();
-      const x = e.pageX - testimonialsViewport.offsetLeft;
-      const walk = (x - startX) * 1.35;
-      testimonialsViewport.scrollLeft = scrollStart - walk;
-    });
-
-    const stopDrag = () => {
-      if (isMouseDown) {
-        isMouseDown = false;
-        testimonialsViewport.classList.remove('is-dragging');
       }
-    };
+      startAutoPlay();
+    }, { passive: true });
 
-    window.addEventListener('mouseup', stopDrag);
-    testimonialsViewport.addEventListener('mouseleave', stopDrag);
+    // Keyboard navigation (Arrow keys when section is in view)
+    document.addEventListener('keydown', (e) => {
+      const testimonialsSection = document.getElementById('testimonials');
+      if (!testimonialsSection) return;
+      const rect = testimonialsSection.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!inView) return;
+
+      if (e.key === 'ArrowRight') {
+        goToSlide(currentIndex + 1, 'next');
+        resetAutoPlay();
+      } else if (e.key === 'ArrowLeft') {
+        goToSlide(currentIndex - 1, 'prev');
+        resetAutoPlay();
+      }
+    });
+
+    // Pause autoplay when window/tab is not visible
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopAutoPlay();
+      } else {
+        startAutoPlay();
+      }
+    });
+
+    // Start slow autoplay
+    startAutoPlay();
   }
 
   // ============================================================
