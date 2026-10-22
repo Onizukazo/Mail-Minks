@@ -404,7 +404,7 @@ img {
 .hero-section {
   position: relative;
   width: 100%;
-  min-height: max(calc(100vh - 24px), 780px);
+  min-height: max(calc(100vh - 24px), 820px);
   border-radius: 24px;
   overflow: visible;
   background-color: #0c82ea;
@@ -748,8 +748,8 @@ img {
   position: relative;
   width: 100%;
   max-width: 1400px;
-  height: 380px;
-  margin: 0 auto;
+  height: 450px;
+  margin: -35px auto 0;
   overflow: visible;
   perspective: 3000px;
   -webkit-mask: linear-gradient(90deg, transparent 0%, #000 8% 92%, transparent 100%);
@@ -765,7 +765,7 @@ img {
 
 .hero-carousel-cylinder {
   position: absolute;
-  top: 35%;
+  top: 34%;
   left: 50%;
   width: 1px;
   height: 1px;
@@ -2585,8 +2585,8 @@ img {
   .hero-section { padding: 75px 16px 20px; }
   .hero-title { font-size: 2.2rem; }
   .floating-badge-wrap { display: none; }
-  .hero-carousel-wrap { height: 320px; margin: 0 auto; }
-  .hero-carousel-cylinder { top: 38%; }
+  .hero-carousel-wrap { height: 350px; margin: -15px auto 0; }
+  .hero-carousel-cylinder { top: 36%; }
   .carousel-card-item { width: 144px; height: 192px; margin-left: -72px; margin-top: -96px; border-radius: 16px; }
 
   .carousel-3d-stage { height: 350px; }
