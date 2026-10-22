@@ -92,12 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let isHovered = false;
     let isTransitioning = false;
 
-    // Responsive 3D Radius calculation (optimized for wide 225px cards)
+    // Responsive 3D Radius calculation (optimized for 190px cards)
     const getRadius = () => {
-      if (window.innerWidth <= 600) return 290;
-      if (window.innerWidth <= 900) return 390;
-      if (window.innerWidth <= 1200) return 460;
-      return 535; // Desktop radius ~535px (diameter ~1070px)
+      if (window.innerWidth <= 600) return 270;
+      if (window.innerWidth <= 900) return 360;
+      if (window.innerWidth <= 1200) return 420;
+      return 485; // Desktop radius ~485px
     };
 
     // Position each card symmetrically along the cylinder circumference
