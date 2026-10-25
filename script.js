@@ -26,21 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.addEventListener('click', () => {
       menuToggle.classList.toggle('active');
       nav.classList.toggle('active');
-      if (nav.classList.contains('active')) {
-        nav.style.display = 'flex';
-        nav.style.flexDirection = 'column';
-        nav.style.position = 'absolute';
-        nav.style.top = '100%';
-        nav.style.left = '0';
-        nav.style.right = '0';
-        nav.style.background = '#ffffff';
-        nav.style.padding = '24px';
-        nav.style.borderRadius = '16px';
-        nav.style.boxShadow = '0 12px 30px rgba(16, 12, 41, 0.12)';
-        nav.style.border = '1px solid rgba(20, 104, 97, 0.1)';
-      } else {
-        nav.style.display = '';
-      }
     });
 
     const links = nav.querySelectorAll('.nav-link');

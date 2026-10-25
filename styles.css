@@ -258,22 +258,22 @@ img {
    ========================================================================== */
 .header {
   position: fixed;
-  top: 12px;
-  left: 12px;
-  right: 12px;
+  top: 14px;
+  left: 14px;
+  right: 14px;
   z-index: 100;
   background: transparent;
-  border-radius: 20px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 22px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header.scrolled {
-  top: 8px;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-light);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  top: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.95);
 }
 
 .header-container {
@@ -2779,8 +2779,50 @@ img {
 }
 
 @media (max-width: 768px) {
-  .nav { display: none; }
-  .menu-toggle { display: flex; }
+  .nav {
+    display: none;
+  }
+
+  .nav.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    gap: 18px;
+    z-index: 101;
+  }
+
+  .nav.active .nav-link {
+    color: var(--mm-obsidian);
+    text-shadow: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
   .hero-section { padding: 75px 16px 20px; }
   .hero-title { font-size: 2.2rem; }
   .floating-badge-wrap { display: none; }
