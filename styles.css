@@ -963,20 +963,6 @@ img {
   transform: translateY(-8vh);
 }
 
-.pillars-kicker {
-  display: inline-block;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mm-teal);
-  background: rgba(20, 104, 97, 0.08);
-  border: 1px solid rgba(20, 104, 97, 0.16);
-  padding: 6px 18px;
-  border-radius: 999px;
-  margin-bottom: 20px;
-}
-
 .tilt-cards_content-contain .section-heading {
   font-size: clamp(2.2rem, 3.8vw, 3.1rem);
   font-weight: 800;
