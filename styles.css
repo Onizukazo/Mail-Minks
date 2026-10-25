@@ -748,8 +748,8 @@ img {
   position: relative;
   width: 100%;
   max-width: 1400px;
-  height: 420px;
-  margin: 0 auto 0;
+  height: 430px;
+  margin: 8px auto 0;
   overflow: visible;
   perspective: 3000px;
   -webkit-mask: linear-gradient(90deg, transparent 0%, #000 8% 92%, transparent 100%);
@@ -765,7 +765,7 @@ img {
 
 .hero-carousel-cylinder {
   position: absolute;
-  top: 38%;
+  top: 37%;
   left: 50%;
   width: 1px;
   height: 1px;
@@ -778,16 +778,16 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 142px;
-  height: 188px;
-  margin-left: -71px;
-  margin-top: -94px;
-  border-radius: 15px;
+  width: 168px;
+  height: 222px;
+  margin-left: -84px;
+  margin-top: -111px;
+  border-radius: 17px;
   overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24), 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: box-shadow 0.25s ease, transform 0.2s ease;
   background: transparent;
@@ -2784,9 +2784,9 @@ img {
   .hero-section { padding: 75px 16px 20px; }
   .hero-title { font-size: 2.2rem; }
   .floating-badge-wrap { display: none; }
-  .hero-carousel-wrap { height: 310px; margin: -10px auto 0; }
-  .hero-carousel-cylinder { top: 38%; }
-  .carousel-card-item { width: 108px; height: 142px; margin-left: -54px; margin-top: -71px; border-radius: 12px; }
+  .hero-carousel-wrap { height: 320px; margin: 5px auto 0; }
+  .hero-carousel-cylinder { top: 37%; }
+  .carousel-card-item { width: 120px; height: 158px; margin-left: -60px; margin-top: -79px; border-radius: 13px; }
 
   .carousel-3d-stage { height: 350px; }
   .carousel-3d-card { width: 200px; height: 300px; }
