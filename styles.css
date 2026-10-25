@@ -2194,45 +2194,233 @@ img {
 }
 
 /* ==========================================================================
-   Section 8: Visual Strip
+   Section 8: Email Portfolio Showcase (Wellcopy Style)
    ========================================================================== */
-.section-visual-strip {
-  padding: 40px 0;
-  background: #ffffff;
+.section-email-portfolio {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 45px 0 65px;
+  overflow: hidden;
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
-  overflow: hidden;
 }
 
-.visual-strip-row {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding: 8px 0;
-}
-
-.visual-strip-row::-webkit-scrollbar { display: none; }
-
-.strip-card {
-  flex: 0 0 160px;
-  height: 120px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--mm-teal-border);
-  box-shadow: var(--shadow-card);
-  background: #f1f3f6;
-}
-
-.strip-card img {
+.email-portfolio {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.strip-card:hover img { transform: scale(1.08); }
+.flex-vertical-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.scroll-tag {
+  height: 2.25rem;
+  display: block;
+  margin-bottom: -1px;
+  user-select: none;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.section-email {
+  width: 100%;
+  background-color: #f2f0ed;
+  padding: 18px 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: auto;
+  position: relative;
+}
+
+.section-email::-webkit-scrollbar {
+  display: none;
+}
+
+.section-email.dragging {
+  cursor: grabbing;
+}
+
+.email-component {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  width: max-content;
+  padding: 0 24px;
+}
+
+.phone-inside {
+  flex: 0 0 225px;
+  width: 225px;
+  height: 360px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  cursor: grab;
+}
+
+.section-email.dragging .phone-inside {
+  cursor: grabbing;
+}
+
+.phone-inside::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.phone-inside:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.email--ui {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Email Lightbox Modal */
+.email-lightbox-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.email-lightbox-modal.active {
+  display: flex;
+}
+
+.email-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 18, 28, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.email-lightbox-content {
+  position: relative;
+  z-index: 2;
+  max-width: 580px;
+  width: 100%;
+  max-height: 88vh;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  animation: emailLightboxIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes emailLightboxIn {
+  from { opacity: 0; transform: scale(0.95) translateY(14px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.email-lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.email-lightbox-close:hover {
+  background: rgba(0, 0, 0, 0.95);
+  transform: scale(1.08);
+}
+
+.email-lightbox-scroll {
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.email-lightbox-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .section-email-portfolio {
+    padding: 35px 0 50px;
+  }
+  .phone-inside {
+    flex: 0 0 195px;
+    width: 195px;
+    height: 312px;
+    border-radius: 9px;
+  }
+  .email-component {
+    gap: 10px;
+    padding: 0 16px;
+  }
+  .scroll-tag {
+    height: 1.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-email-portfolio {
+    padding: 28px 0 40px;
+  }
+  .phone-inside {
+    flex: 0 0 168px;
+    width: 168px;
+    height: 270px;
+    border-radius: 8px;
+  }
+  .email-component {
+    gap: 8px;
+    padding: 0 12px;
+  }
+  .scroll-tag {
+    height: 1.75rem;
+  }
+}
 
 /* ==========================================================================
    Section 9: FAQ

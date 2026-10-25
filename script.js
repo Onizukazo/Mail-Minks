@@ -418,5 +418,98 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ============================================================
+  // SECTION 8: WELLCOPY STYLE EMAIL PORTFOLIO DRAGGABLE SHOWCASE
+  // ============================================================
+  const emailSection = document.getElementById('emailersSection');
+  const emailLightbox = document.getElementById('emailLightbox');
+  const emailLightboxImg = document.getElementById('emailLightboxImg');
+  const emailLightboxClose = document.querySelector('.email-lightbox-close');
+  const emailLightboxBackdrop = document.querySelector('.email-lightbox-backdrop');
+
+  if (emailSection) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let hasMoved = false;
+
+    emailSection.addEventListener('mousedown', (e) => {
+      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+      isDown = true;
+      hasMoved = false;
+      emailSection.classList.add('dragging');
+      startX = e.pageX - emailSection.offsetLeft;
+      scrollLeft = emailSection.scrollLeft;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const x = e.pageX - emailSection.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      if (Math.abs(walk) > 4) {
+        hasMoved = true;
+        e.preventDefault();
+      }
+      emailSection.scrollLeft = scrollLeft - walk;
+    });
+
+    const endDrag = () => {
+      if (isDown) {
+        isDown = false;
+        emailSection.classList.remove('dragging');
+      }
+    };
+
+    window.addEventListener('mouseup', endDrag);
+    emailSection.addEventListener('dragstart', (e) => e.preventDefault());
+
+    // Touch support for mobile / tablets
+    emailSection.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].pageX - emailSection.offsetLeft;
+      scrollLeft = emailSection.scrollLeft;
+      hasMoved = false;
+    }, { passive: true });
+
+    emailSection.addEventListener('touchmove', (e) => {
+      const x = e.touches[0].pageX - emailSection.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      if (Math.abs(walk) > 4) hasMoved = true;
+      emailSection.scrollLeft = scrollLeft - walk;
+    }, { passive: true });
+
+    // Click on email card to open full-resolution lightbox (only if not dragged)
+    const cards = emailSection.querySelectorAll('.phone-inside');
+    cards.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        if (hasMoved) return; // Ignore if user was dragging
+        const img = card.querySelector('.email--ui');
+        if (img && emailLightbox && emailLightboxImg) {
+          emailLightboxImg.src = img.src;
+          emailLightboxImg.alt = img.alt || 'Full Email Preview';
+          emailLightbox.classList.add('active');
+          emailLightbox.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    // Close lightbox helpers
+    const closeLightbox = () => {
+      if (!emailLightbox) return;
+      emailLightbox.classList.remove('active');
+      emailLightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    if (emailLightboxClose) emailLightboxClose.addEventListener('click', closeLightbox);
+    if (emailLightboxBackdrop) emailLightboxBackdrop.addEventListener('click', closeLightbox);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && emailLightbox && emailLightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  }
+
 });
+
 
