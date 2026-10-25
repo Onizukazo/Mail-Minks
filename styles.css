@@ -1039,11 +1039,8 @@ img {
   left: 50%;
   transform: translate(-50%, 65vh);
   pointer-events: auto;
-  will-change: transform, box-shadow;
-  cursor: pointer;
-  perspective: 1200px;
-  transform-style: preserve-3d;
-  transition: box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+  will-change: transform;
+  cursor: default;
 }
 
 .tilt-cards_card_inner {
@@ -1056,8 +1053,6 @@ img {
   flex-direction: column;
   justify-content: space-between;
   overflow: visible;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-style: preserve-3d;
 }
 
 /* Top: Sticker + Number Badge */
@@ -1194,15 +1189,14 @@ img {
   border: 1px solid rgba(214, 253, 112, 0.35);
 }
 
-/* Overlapping Mascot on Card 4 */
+/* Overlapping Mascot on Card 4 (Positioned outside text bounds for 100% legibility) */
 .pillar-card-mascot .pillars-mascot {
   position: absolute;
-  right: -36px;
-  bottom: -22px;
-  width: 140px;
+  right: -105px;
+  bottom: 16px;
+  width: 130px;
   z-index: 10;
   pointer-events: none;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pillar-card-mascot .pillars-mascot-img {
@@ -1213,18 +1207,8 @@ img {
   filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.25));
 }
 
-.pillar-card-mascot:hover .pillars-mascot {
-  transform: translateY(-8px) scale(1.08) rotate(-3deg);
-}
-
-/* Interactive Hover State on Cards */
-.tilt-cards_card:hover {
-  box-shadow: 0 38px 85px rgba(0, 0, 0, 0.32), 0 8px 24px rgba(0, 0, 0, 0.12);
-  z-index: 25 !important;
-}
-
-.tilt-cards_card:hover .pillar-sticker-wrap {
-  transform: scale(1.1) rotate(4deg);
+.card-theme-abyss .pillar-text {
+  max-width: 90%;
 }
 
 /* Pinned Bottom CTA */

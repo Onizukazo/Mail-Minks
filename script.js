@@ -618,52 +618,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // 6. Interactive 3D Cursor Tilt & Glare on Cards
-      cards.forEach(card => {
-        const inner = card.querySelector('.tilt-cards_card_inner');
-        const circle = card.closest('.tilt-cards_circle');
-        if (!inner) return;
-
-        let bounds;
-        const onMouseEnter = () => {
-          bounds = card.getBoundingClientRect();
-          if (circle) circle.style.zIndex = 50;
-        };
-
-        const onMouseMove = (e) => {
-          if (!bounds) bounds = card.getBoundingClientRect();
-          const mouseX = e.clientX - bounds.left;
-          const mouseY = e.clientY - bounds.top;
-          const xPct = (mouseX / bounds.width - 0.5);
-          const yPct = (mouseY / bounds.height - 0.5);
-
-          gsap.to(inner, {
-            rotationX: -yPct * 16,
-            rotationY: xPct * 16,
-            z: 32,
-            scale: 1.05,
-            duration: 0.35,
-            ease: 'power2.out'
-          });
-        };
-
-        const onMouseLeave = () => {
-          if (circle) circle.style.zIndex = '';
-          gsap.to(inner, {
-            rotationX: 0,
-            rotationY: 0,
-            z: 0,
-            scale: 1,
-            duration: 0.55,
-            ease: 'power3.out'
-          });
-        };
-
-        card.addEventListener('mouseenter', onMouseEnter);
-        card.addEventListener('mousemove', onMouseMove);
-        card.addEventListener('mouseleave', onMouseLeave);
-      });
-
       return () => {
         ScrollTrigger.getAll().forEach(st => {
           if (st.trigger === pinHeight) st.kill();
@@ -673,8 +627,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const card = c.querySelector('.tilt-cards_card');
           if (card) {
             gsap.set(card, { clearProps: 'all' });
-            const inner = card.querySelector('.tilt-cards_card_inner');
-            if (inner) gsap.set(inner, { clearProps: 'all' });
           }
         });
       };
