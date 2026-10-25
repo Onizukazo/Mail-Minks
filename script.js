@@ -495,6 +495,202 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ============================================================
+  // Abatable-Style Pinning Transition & Radial Arc Cards Interaction
+  // ============================================================
+  const initAbatableTiltCards = () => {
+    const wrap = document.querySelector('.tilt-cards_wrap');
+    if (!wrap || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 769px)', () => {
+      const pinHeight = wrap.querySelector('.tilt-cards_pin-height');
+      const contain = wrap.querySelector('.tilt-cards_contain');
+      const content = wrap.querySelector('.tilt-cards_content-contain');
+      const circlesWrap = wrap.querySelector('.tilt-cards_circles');
+      const circles = wrap.querySelectorAll('.tilt-cards_circle');
+      const cards = wrap.querySelectorAll('.tilt-cards_card');
+      const cta = wrap.querySelector('.tilt-cards_pinned-cta');
+
+      if (!pinHeight || !circles.length) return;
+
+      const totalScroll = pinHeight.clientHeight - window.innerHeight;
+
+      // 1. Viewport Pinning (Section stays pinned while cards orbit into view)
+      ScrollTrigger.create({
+        trigger: pinHeight,
+        start: 'top top',
+        end: 'bottom bottom',
+        pin: contain,
+        scrub: 1,
+        anticipatePin: 1
+      });
+
+      // 2. Section Header Fade & Parallax Exit as cards arrive
+      gsap.to(content, {
+        opacity: 0,
+        y: -60,
+        scale: 0.94,
+        ease: 'power1.out',
+        scrollTrigger: {
+          trigger: pinHeight,
+          start: 'top top',
+          end: `+=${totalScroll * 0.28}`,
+          scrub: 1
+        }
+      });
+
+      // 3. Circles Container subtle vertical elevation
+      gsap.fromTo(circlesWrap, {
+        y: '8%'
+      }, {
+        y: '-5%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: pinHeight,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1
+        }
+      });
+
+      // Initialize cards and circles starting positions
+      gsap.set(cards, {
+        xPercent: -50,
+        y: '65vh'
+      });
+      gsap.set(circles, {
+        rotation: 0
+      });
+
+      // 4. Cards Radial Arc & Fanning Out (Abatable Wheel Formula with Holding Showcase)
+      const spreadAngle = 11.2; // Radial degrees fan-out per card on 250vw wheel (~26vw horizontal step)
+      const count = circles.length;
+      const halfRange = ((count - 1) * spreadAngle) / 2;
+      const fanScroll = totalScroll * 0.62; // Complete fan-out by 62% of pin track so cards hold in view
+      const distPerCard = fanScroll / count;
+
+      circles.forEach((circle, index) => {
+        const targetRot = -halfRange + (index * spreadAngle);
+        const card = circle.querySelector('.tilt-cards_card');
+
+        // Circle rotates into position along the radial orbit
+        gsap.to(circle, {
+          rotation: targetRot,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: pinHeight,
+            start: `top top-=${distPerCard * index * 0.75}`,
+            end: `+=${distPerCard * 1.25}`,
+            scrub: 1
+          }
+        });
+
+        // Card rises into position and aligns with radial arc
+        gsap.to(card, {
+          y: '-50%',
+          rotation: targetRot,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: pinHeight,
+            start: `top top-=${distPerCard * index * 0.75}`,
+            end: `+=${distPerCard * 1.25}`,
+            scrub: 1
+          }
+        });
+      });
+
+      // 5. Bottom Pinned CTA fades in as the cards finish fanning
+      if (cta) {
+        gsap.to(cta, {
+          opacity: 1,
+          y: 0,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: pinHeight,
+            start: `top top-=${totalScroll * 0.55}`,
+            end: `+=${totalScroll * 0.25}`,
+            scrub: 1
+          }
+        });
+      }
+
+      // 6. Interactive 3D Cursor Tilt & Glare on Cards
+      cards.forEach(card => {
+        const inner = card.querySelector('.tilt-cards_card_inner');
+        const circle = card.closest('.tilt-cards_circle');
+        if (!inner) return;
+
+        let bounds;
+        const onMouseEnter = () => {
+          bounds = card.getBoundingClientRect();
+          if (circle) circle.style.zIndex = 50;
+        };
+
+        const onMouseMove = (e) => {
+          if (!bounds) bounds = card.getBoundingClientRect();
+          const mouseX = e.clientX - bounds.left;
+          const mouseY = e.clientY - bounds.top;
+          const xPct = (mouseX / bounds.width - 0.5);
+          const yPct = (mouseY / bounds.height - 0.5);
+
+          gsap.to(inner, {
+            rotationX: -yPct * 16,
+            rotationY: xPct * 16,
+            z: 32,
+            scale: 1.05,
+            duration: 0.35,
+            ease: 'power2.out'
+          });
+        };
+
+        const onMouseLeave = () => {
+          if (circle) circle.style.zIndex = '';
+          gsap.to(inner, {
+            rotationX: 0,
+            rotationY: 0,
+            z: 0,
+            scale: 1,
+            duration: 0.55,
+            ease: 'power3.out'
+          });
+        };
+
+        card.addEventListener('mouseenter', onMouseEnter);
+        card.addEventListener('mousemove', onMouseMove);
+        card.addEventListener('mouseleave', onMouseLeave);
+      });
+
+      return () => {
+        ScrollTrigger.getAll().forEach(st => {
+          if (st.trigger === pinHeight) st.kill();
+        });
+        circles.forEach(c => {
+          gsap.set(c, { clearProps: 'all' });
+          const card = c.querySelector('.tilt-cards_card');
+          if (card) {
+            gsap.set(card, { clearProps: 'all' });
+            const inner = card.querySelector('.tilt-cards_card_inner');
+            if (inner) gsap.set(inner, { clearProps: 'all' });
+          }
+        });
+      };
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 250);
+    });
+  };
+
+  initAbatableTiltCards();
+
 });
 
 
